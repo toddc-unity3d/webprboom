@@ -46,6 +46,10 @@
 #include "i_joy.h"
 #include "lprintf.h"
 
+// emscripten
+#include <emscripten.h>
+#include <emscripten/html5.h>
+
 int joyleft;
 int joyright;
 int joyup;
@@ -75,19 +79,85 @@ void I_PollJoystick(void)
     (SDL_JoystickGetButton(joystick, 1)<<1) |
     (SDL_JoystickGetButton(joystick, 2)<<2) |
     (SDL_JoystickGetButton(joystick, 3)<<3);
-  axis_value = SDL_JoystickGetAxis(joystick, 0) / 3000;
-  if (abs(axis_value)<10) axis_value=0;
+
+  // for (int i = 0; i < 16; i++) {
+  //   int val = SDL_JoystickGetButton(joystick, i);
+  //   if (val) {
+  //     printf("Button down: %d\n", i);
+  //   }
+  // }
+
+  //axis_value = SDL_JoystickGetAxis(joystick, 0) / 3000;
+  axis_value = SDL_JoystickGetAxis(joystick, 0);
+  if (abs(axis_value)<15000) {
+    axis_value = 
+      SDL_JoystickGetButton(joystick, 14) ? -1 : 
+        SDL_JoystickGetButton(joystick, 15) ? 1 : 0;
+  } else {
+    axis_value = axis_value > 0 ? 1 : -1;
+  } 
+  //if (abs(axis_value)<10) axis_value=0;
   ev.data2 = axis_value;
-  axis_value = SDL_JoystickGetAxis(joystick, 1) / 3000;
-  if (abs(axis_value)<10) axis_value=0;
+  axis_value = SDL_JoystickGetAxis(joystick, 1);
+  if (abs(axis_value)<15000) {
+    axis_value = 
+      SDL_JoystickGetButton(joystick, 12) ? -1 : 
+        SDL_JoystickGetButton(joystick, 13) ? 1 : 0;
+  } else {
+     axis_value = axis_value > 0 ? 1 : -1;
+  }
+  //axis_value = SDL_JoystickGetAxis(joystick, 1) / 3000;
+  //if (abs(axis_value)<10) axis_value=0;
   ev.data3 = axis_value;
 
   D_PostEvent(&ev);
 #endif
+
+  // emscripten
+  // int num_joysticks =  emscripten_get_num_gamepads();
+  // joystick = (num_joysticks >= 1) ? 1 : 0;
+  // lprintf(LO_INFO, "joysticks %d\n", num_joysticks);  
+}
+
+// emscripten
+EM_BOOL gamepad_callback(int eventType, const EmscriptenGamepadEvent *e, void *userData)
+{
+  printf("%s: timeStamp: %g, connected: %d, index: %ld, numAxes: %d, numButtons: %d, id: \"%d\", mapping: \"%s\"\n",
+    eventType, "Gamepad state", e->timestamp, e->connected, e->index,
+    e->numAxes, e->numButtons, e->id, e->mapping);
+
+  if (e->connected)
+  {
+    for(int i = 0; i < e->numAxes; ++i)
+      printf("Axis %d: %g\n", i, e->axis[i]);
+
+    for(int i = 0; i < e->numButtons; ++i)
+      printf("Button %d: Digital: %d, Analog: %g\n", i, e->digitalButton[i], e->analogButton[i]);
+
+    if (!joystick) {
+      joystick = SDL_JoystickOpen(usejoystick-1);
+      if (!joystick)
+        lprintf(LO_ERROR, "Error opening joystick\n");
+      else {
+        atexit(I_EndJoystick);
+        lprintf(LO_INFO, "Joystick: Opened %s\n", SDL_JoystickName(usejoystick-1));
+        joyup = 32767;
+        joydown = -32768;
+        joyright = 32767;
+        joyleft = -32768;
+      }
+    }
+  }
+
+  return 0;
 }
 
 void I_InitJoystick(void)
-{
+{  
+  // emscripten
+  EMSCRIPTEN_RESULT ret = emscripten_set_gamepadconnected_callback(0, 1, gamepad_callback);
+  ret = emscripten_set_gamepaddisconnected_callback(0, 1, gamepad_callback);
+
 #ifdef HAVE_SDL_JOYSTICKGETAXIS
   const char* fname = "I_InitJoystick : ";
   int num_joysticks;
@@ -102,7 +172,8 @@ void I_InitJoystick(void)
       lprintf(LO_INFO, "%suser disabled\n", fname);
     return;
   }
-  joystick=SDL_JoystickOpen(usejoystick-1);
+  //joystick=SDL_JoystickOpen(usejoystick-1);
+  joystick= SDL_JoystickOpen(usejoystick-1);
   if (!joystick)
     lprintf(LO_ERROR, "%serror opening joystick %s\n", fname, SDL_JoystickName(usejoystick-1));
   else {

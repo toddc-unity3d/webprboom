@@ -4096,73 +4096,79 @@ boolean M_Responder (event_t* ev) {
 
   ch = -1; // will be changed to a legit char if we're going to use it here
 
+//printf("M_Responder: joy:%d %d, %d, state:%d\n", ev->type == ev_joystick, ev->data2, ev->data3, gamestate);  
+
   // Process joystick input
 
-  if (ev->type == ev_joystick && joywait < I_GetTime())  {
-    if (ev->data3 == -1)
-      {
-  ch = key_menu_up;                                // phares 3/7/98
-  joywait = I_GetTime() + 5;
-      }
-    else if (ev->data3 == 1)
-      {
-  ch = key_menu_down;                              // phares 3/7/98
-  joywait = I_GetTime() + 5;
+  if (ev->type == ev_joystick) {
+    int delay = 10;
+    if (joywait < I_GetTime()) {
+      if (!menuactive && !usergame && ev->type == ev_joystick &&
+          ev->data1) {
+        M_StartControlPanel();
+        S_StartSound(NULL, sfx_swtchn);
+        return true;
       }
 
-    if (ev->data2 == -1)
-      {
-  ch = key_menu_left;                              // phares 3/7/98
-  joywait = I_GetTime() + 2;
-      }
-    else if (ev->data2 == 1)
-      {
-  ch = key_menu_right;                             // phares 3/7/98
-  joywait = I_GetTime() + 2;
+      if (ev->data3 == -1) {
+        ch = key_menu_up;  // phares 3/7/98
+        joywait = I_GetTime() + delay;
+      } else if (ev->data3 == 1) {
+        ch = key_menu_down;  // phares 3/7/98
+        joywait = I_GetTime() + delay;
       }
 
-    if (ev->data1&1)
-      {
-  ch = key_menu_enter;                             // phares 3/7/98
-  joywait = I_GetTime() + 5;
+      if (ev->data2 == -1) {
+        ch = key_menu_left;  // phares 3/7/98
+        joywait = I_GetTime() + delay;
+      } else if (ev->data2 == 1) {
+        ch = key_menu_right;  // phares 3/7/98
+        joywait = I_GetTime() + delay;
       }
 
-    if (ev->data1&2)
-      {
-  ch = key_menu_backspace;                         // phares 3/7/98
-  joywait = I_GetTime() + 5;
+      if (ev->data1 & 1) {
+        ch = key_menu_enter;  // phares 3/7/98
+        joywait = I_GetTime() + delay;
       }
 
-    // phares 4/4/98:
-    // Handle joystick buttons 3 and 4, and allow them to pass down
-    // to where key binding can eat them.
-
-    if (setup_active && set_keybnd_active) {
-      if (ev->data1&4) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+      if (ev->data1 & 2) {
+        ch = key_menu_backspace;  // phares 3/7/98
+        joywait = I_GetTime() + delay;
       }
-      if (ev->data1&8) {
-  ch = 0; // meaningless, just to get you past the check for -1
-  joywait = I_GetTime() + 5;
+
+      // phares 4/4/98:
+      // Handle joystick buttons 3 and 4, and allow them to pass down
+      // to where key binding can eat them.
+
+      if (setup_active && set_keybnd_active) {
+        if (ev->data1 & 4) {
+          ch = 0;  // meaningless, just to get you past the check for -1
+          joywait = I_GetTime() + delay;
+        }
+        if (ev->data1 & 8) {
+          ch = 0;  // meaningless, just to get you past the check for -1
+          joywait = I_GetTime() + delay;
+        }
+      }
+    } else {
+      if (!ev->data1 && !ev->data2 && !ev->data3) {
+        joywait = 0;
       }
     }
-
   } else {
     // Mouse input processing removed
 
-      // Process keyboard input
+    // Process keyboard input
 
-      if (ev->type == ev_keydown)
-        {
-        ch = ev->data1;               // phares 4/11/98:
-        if (ch == KEYD_RSHIFT)        // For chat string processing, need
-          shiftdown = true;           // to know when shift key is up or
-        }                             // down so you can get at the !,#,
-      else if (ev->type == ev_keyup)  // etc. keys. Keydowns are allowed
-        if (ev->data1 == KEYD_RSHIFT) // past this point, but keyups aren't
-          shiftdown = false;          // so we need to note the difference
-    }                                 // here using the 'shiftdown' boolean.
+    if (ev->type == ev_keydown) {
+      ch = ev->data1;                // phares 4/11/98:
+      if (ch == KEYD_RSHIFT)         // For chat string processing, need
+        shiftdown = true;          // to know when shift key is up or
+    }                                  // down so you can get at the !,#,
+    else if (ev->type == ev_keyup)     // etc. keys. Keydowns are allowed
+      if (ev->data1 == KEYD_RSHIFT)  // past this point, but keyups aren't
+        shiftdown = false;         // so we need to note the difference
+  }                                      // here using the 'shiftdown' boolean.
 
   if (ch == -1)
     return false; // we can't use the event here
@@ -5171,7 +5177,7 @@ boolean M_Responder (event_t* ev) {
     }
     }
   return false;
-}
+  }
 
 //
 // End of M_Responder

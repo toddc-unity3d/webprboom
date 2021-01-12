@@ -60,7 +60,8 @@
  */
 
 /* Try to use superfast macros on systems that support them */
-#ifdef HAVE_ASM_BYTEORDER_H
+//#ifdef HAVE_ASM_BYTEORDER_H
+#if 0
 #include <asm/byteorder.h>
 #ifdef __arch__swab16
 #define doom_swap_s  (signed short)__arch__swab16

@@ -1,4 +1,5 @@
 /* config.h.  Generated from config.h.in by configure.  */
+/* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Uncomment this to exhaustively run memory checks while the game is running
@@ -15,7 +16,7 @@
 #define GL_DOOM 1
 
 /* Define to 1 if you have the <asm/byteorder.h> header file. */
-#define HAVE_ASM_BYTEORDER_H 1
+#define HAVE_ASM_BYTEORDER_H 0
 
 /* Define to 1 if you have the declaration of `sys_siglist', and to 0 if you
    don't. */

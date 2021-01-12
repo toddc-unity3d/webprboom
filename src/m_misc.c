@@ -559,7 +559,7 @@ default_t defaults[] =
    0,MAX_KEY,def_key,ss_keys}, // key to take a screenshot
 
   {"Joystick settings",{NULL},{0},UL,UL,def_none,ss_none},
-  {"use_joystick",{&usejoystick},{0},0,2,
+  {"use_joystick",{&usejoystick},{1},0,2,
    def_int,ss_none}, // number of joystick to use (0 for none)
   {"joy_left",{&joyleft},{0},  UL,UL,def_int,ss_none},
   {"joy_right",{&joyright},{0},UL,UL,def_int,ss_none},
