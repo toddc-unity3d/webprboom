@@ -494,6 +494,7 @@ void S_ChangeMusic(int musicnum, int looping)
   // proff_fs - only load when from IWAD
   if (lumpinfo[music->lumpnum].source == source_iwad)
     {
+      lprintf(LO_INFO, "Change music: %s\n", S_music_files[musicnum]);      
       // cournia - check to see if we can play a higher quality music file
       //           rather than the default MIDI
       music_filename = I_FindFile(S_music_files[musicnum], "");

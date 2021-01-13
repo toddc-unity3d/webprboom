@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rm -rf ./build/final.bc
-rm -rf ./build/web
+
 
 cd ./src/SDL/
 make clean
@@ -19,19 +19,29 @@ mv ./src/prboom ./build/final.bc
 cp ./data/prboom.wad ./build/prboom.wad
 
 cd ./build/
-mkdir web
 
-game="doom1"
-
-if [ "$1" == "doom2" ] || [ "$1" == "2" ]; then
-    game="doom2"
+if [ $# -eq 0 ]
+  then
+    game="doom1"
+  else
+    game="$1"
 fi
 
-emcc final.bc -o web/${game}.html  	\
+wad="$game"
+
+if [[ $game == freedoom* ]]
+  then
+    wad="freedoom"
+fi
+
+rm -rf web/${game}/
+mkdir -p web/${game}/
+
+emcc final.bc -o web/${game}/${game}.html  	\
      --preload-file prboom.wad     	\
-     --preload-file ${game}.wad 	\
-     --preload-file ${game}/music  	\
-     --preload-file sfx    		\
+     --preload-file ${game}/${wad}.wad@/${wad}.wad 	\
+     --preload-file ${game}/music@/music  	\
+     --preload-file ${game}/sfx@/sfx    		\
      -s TOTAL_MEMORY=256MB     		\
      -s LEGACY_GL_EMULATION=1      	\
      --no-heap-copy -O3

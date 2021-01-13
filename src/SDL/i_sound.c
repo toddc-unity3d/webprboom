@@ -190,6 +190,7 @@ static int addsfx(int sfxid, int channel, const unsigned char* data, size_t len)
   // browser's requests when building with emscripten:
   channelinfo[channel].chunk = Mix_LoadWAV(sfx);
   Mix_PlayChannel(-1, channelinfo[channel].chunk, 0);
+  //Mix_VolumeChunk(channelinfo[channel].chunk, snd_SfxVolume*8);
   channelinfo[channel].isPlaying = true;
 
   /*
@@ -805,6 +806,7 @@ int I_RegisterSong(const void *data, size_t len)
 //           returns true if could not load the file
 int I_RegisterMusic( const char* filename, musicinfo_t *song )
 {
+  lprintf(LO_INFO, "Register music: %s\n", filename);
 #ifdef HAVE_MIXER
   if (!filename) return 1;
   if (!song) return 1;
