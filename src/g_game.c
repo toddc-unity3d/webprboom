@@ -212,6 +212,8 @@ int     joybfire;
 int     joybstrafe;
 int     joybuse;
 int     joybspeed;
+int     joybweaponprev;
+int     joybweaponnext;
 
 #define MAXPLMOVE   (forwardmove[1])
 #define TURBOTHRESHOLD  0x32
@@ -243,7 +245,7 @@ static int   dclicks2;
 // joystick values are repeated
 static int   joyxmove;
 static int   joyymove;
-static boolean joyarray[5];
+static boolean joyarray[7];
 static boolean *joybuttons = &joyarray[1];    // allow [-1]
 
 // Game events info
@@ -376,6 +378,16 @@ void G_BuildTiccmd(ticcmd_t* cmd)
       // clear double clicks if hit use button
       dclicks = 0;
     }
+
+  if (joybuttons[joybweaponnext] || joybuttons[joybweaponprev]) 
+  {
+    player_t *p = &players[consoleplayer];
+    int next = P_NextWeapon(p, joybuttons[joybweaponnext]);
+    if (next != p->readyweapon)
+    {
+      p->pendingweapon = next;
+    }
+  }  
 
   // Toggle between the top 2 favorite weapons.                   // phares
   // If not currently aiming one of these, switch to              // phares
@@ -744,6 +756,9 @@ boolean G_Responder (event_t* ev)
       joybuttons[1] = ev->data1 & 2;
       joybuttons[2] = ev->data1 & 4;
       joybuttons[3] = ev->data1 & 8;
+      joybuttons[4] = ev->data1 & 16;
+      joybuttons[5] = ev->data1 & 32;
+
       joyxmove = ev->data2;
       joyymove = ev->data3;
       return true;    // eat events

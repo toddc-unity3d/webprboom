@@ -91,6 +91,7 @@ boolean P_CheckAmmo(struct player_s *player);
 void P_SetupPsprites(struct player_s *curplayer);
 void P_MovePsprites(struct player_s *curplayer);
 void P_DropWeapon(struct player_s *player);
+int P_NextWeapon(struct player_s *player, boolean forward);
 
 void A_Light0();
 void A_WeaponReady();

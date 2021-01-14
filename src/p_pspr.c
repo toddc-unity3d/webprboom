@@ -211,6 +211,58 @@ int P_SwitchWeapon(player_t *player)
   return newweapon;
 }
 
+static boolean IsWeaponAvailable(player_t *player, int weapon) {
+  switch (weapon)
+    {
+    case wp_fist:
+      return true;
+    case wp_pistol:
+      return (player->ammo[am_clip]);
+    case wp_shotgun:
+      return (player->weaponowned[wp_shotgun] && player->ammo[am_shell]);
+    case wp_chaingun:
+      return (player->weaponowned[wp_chaingun] && player->ammo[am_clip]);
+    case wp_missile:
+      return (player->weaponowned[wp_missile] && player->ammo[am_misl]);
+    case wp_plasma:
+      return (player->weaponowned[wp_plasma] && player->ammo[am_cell] && 
+          gamemode != shareware);
+    case wp_bfg:
+      return (player->weaponowned[wp_bfg] && gamemode != shareware &&
+          player->ammo[am_cell] >= (demo_compatibility ? 41 : 40));
+    case wp_chainsaw:
+      return (player->weaponowned[wp_chainsaw]);
+    case wp_supershotgun:
+      return (player->weaponowned[wp_supershotgun] && gamemode == commercial &&
+          player->ammo[am_shell] >= (demo_compatibility ? 3 : 2));
+    }
+  return false;
+}
+
+
+int P_NextWeapon(player_t *player, boolean forward)
+{
+  int currentweapon = player->readyweapon;
+  int i = currentweapon;
+
+  do 
+  {
+    i = forward ? i + 1 : i - 1;
+    if (i == NUMWEAPONS)
+    {
+      i = 0;
+    } 
+    else if (i == -1) 
+    {
+      i = NUMWEAPONS - 1;
+    }    
+    if (IsWeaponAvailable(player, i)) {
+      return i;
+    }
+  } while (i != currentweapon);
+  return i;     
+}
+
 // killough 5/2/98: whether consoleplayer prefers weapon w1 over weapon w2.
 int P_WeaponPreferred(int w1, int w2)
 {

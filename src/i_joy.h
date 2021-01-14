@@ -35,6 +35,8 @@ extern int joybfire;
 extern int joybstrafe;
 extern int joybuse;
 extern int joybspeed;
+extern int joybweaponprev;
+extern int joybweaponnext;
 
 extern int joyleft;
 extern int joyright;
