@@ -22,7 +22,6 @@ autom4te.cache/*
 *.xml
 *.log
 .*.swp
-*.*.in
 *.desktop
 
 *.wad
@@ -40,4 +39,3 @@ prboom-game-server
 !public/*
 !build/final.bc
 !data/prboom.wad
-
