@@ -39,12 +39,11 @@ export default class App extends Component {
     onSelected(key) {        
         let canvas = document.getElementById('GameCanvas');
         let Module = window.Module;
-        
+
         Module.canvas = canvas;        
         Module.elementPointerLock = true;
         Module.locateFile = (path, prefix) => { return key + "/" + path; }
         Module.setStatus = (status) => {
-            console.log(status);
             let loading = status.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);            
             if (loading) {
                 let progress = loading[2] / loading[4] * 100;
