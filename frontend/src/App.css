@@ -1,8 +1,8 @@
-.header {
+.Header {
     padding: 5vh 0 2vh 0;
 }
 
-.header img {
+.Header img {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -10,11 +10,11 @@
     max-height: 10vh;
 }
 
-.footer {
+.Footer {
     padding: 4vh 0 0 0;
 }
 
-.footer img {
+.Footer img {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -34,4 +34,25 @@
 
 .BoomCarousel-outer img {
     cursor: pointer;
+}
+
+.Menu {
+    position: absolute;
+    left: 50%;   
+    top: 50%;    
+    transform: translate(-50%, -50%);    
+}
+
+#GameCanvas {
+    display: none;
+    position: absolute;
+
+    width: calc(100% - 4vw);
+    height: calc(96vw * .75); 
+    max-height: 96vh;
+    max-width: calc(96vh * 1.333);
+
+    left: 50%;   
+    top: 50%;    
+    transform: translate(-50%, -50%);    
 }

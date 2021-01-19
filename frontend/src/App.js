@@ -21,7 +21,8 @@ export default class App extends Component {
     ModeEnum = {"menu":1, "loading":2, "loaded":3}
 
     state = {
-        mode: this.ModeEnum["menu"]
+        mode: this.ModeEnum["menu"],
+        loadingPercent: 0
     }
 
     componentDidMount() {
@@ -35,7 +36,31 @@ export default class App extends Component {
         }
     }
 
-    onSelected(key) {
+    onSelected(key) {        
+        let canvas = document.getElementById('GameCanvas');
+        let Module = window.Module;
+        
+        Module.canvas = canvas;        
+        Module.elementPointerLock = true;
+        Module.locateFile = (path, prefix) => { return key + "/" + path; }
+        Module.setStatus = (status) => {
+            console.log(status);
+            let loading = status.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);            
+            if (loading) {
+                let progress = loading[2] / loading[4] * 100;
+                this.setState({loadingPercent: progress});
+                if (progress === 100) {
+                    window.Module.canvas.style.display = 'block';
+                    this.setState({ mode: this.ModeEnum["loaded"] });            
+                }
+            }            
+        }
+
+        var script = document.createElement('script');
+        document.body.appendChild(script);
+        script.type = 'text/javascript';
+        script.src = key + '/' + key + '.js';
+
         this.setState({ mode: this.ModeEnum["loading"] });
     }
 
@@ -119,24 +144,33 @@ export default class App extends Component {
         }
     }
 
+    getMenuRender() {
+        return (
+            <div className="Menu">
+                <div className="Header">
+                <img src={titleImage} alt=""></img>
+                </div>
+                <div className="BoomCarousel-outer">
+                    {this.state.mode === this.ModeEnum["loading"] ? 
+                        <Loading percent={this.state.loadingPercent} /> : null}
+                    <BoomCarousel 
+                        ref={this.carouselRef} 
+                        onSelected={(key) => { this.onSelected(key) }}                            
+                    />
+                </div>
+                <div className="Footer">
+                    <img src={footerImage} alt=""></img>
+                </div>                    
+            </div>
+        );
+    }
+
     render() {
          return (
-            <React.StrictMode>
-                <div>                    
-                    <div className="header">
-                        <img src={titleImage} alt=""></img>
-                    </div>
-                    <div
-                     className="BoomCarousel-outer">
-                        {this.state.mode === this.ModeEnum["loading"] ? <Loading /> : null}
-                        <BoomCarousel 
-                            ref={this.carouselRef} 
-                            onSelected={(key) => { this.onSelected(key) }}                            
-                        />
-                    </div>
-                    <div className="footer">
-                        <img src={footerImage} alt=""></img>
-                    </div>                    
+            <React.StrictMode>                
+                <div>         
+                    <canvas id="GameCanvas"></canvas>
+                    {this.state.mode !== this.ModeEnum["loaded"] ? this.getMenuRender() : null}
                 </div>                
             </React.StrictMode>            
         );
