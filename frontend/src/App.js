@@ -13,14 +13,20 @@ export default class App extends Component {
 
         this.carouselRef = React.createRef();
         this.keyUpListener = this.createKeyUpListener();
-
-        document.addEventListener("keyup", this.keyUpListener);
+        this.animationListener = this.createAnimationListener();        
     }
+
+    padDown = false;
 
     ModeEnum = {"menu":1, "loading":2, "loaded":3}
 
     state = {
         mode: this.ModeEnum["menu"]
+    }
+
+    componentDidMount() {
+        document.addEventListener("keyup", this.keyUpListener);
+        requestAnimationFrame(this.animationListener);        
     }
 
     componentDidUpdate() {
@@ -31,6 +37,66 @@ export default class App extends Component {
 
     onSelected(key) {
         this.setState({ mode: this.ModeEnum["loading"] });
+    }
+
+    pollGamepads(that) {
+        let carousel = that.carouselRef.current;
+        let padDown = that.padDown;
+        let gamepads = navigator.getGamepads ? 
+            navigator.getGamepads() : (navigator.webkitGetGamepads ? 
+                navigator.webkitGetGamepads : []);
+        for (let i = 0; i < gamepads.length; i++) {
+            if (gamepads[i]) {
+                let pad = gamepads[i];
+                let buttons = pad.buttons;
+                if (buttons && buttons.length >= 16) {
+                    let hit = true;
+                    if (buttons[14].pressed) {
+                        if (!padDown) carousel.moveLeft();
+                    }
+                    else if (buttons[15].pressed) {
+                        if (!padDown) carousel.moveRight();
+                    }
+                    else if (buttons[0].pressed) {
+                        if (!padDown) carousel.select();
+                    } else {
+                        hit = false;
+                    }
+                    if (hit) {
+                        that.padDown = true;
+                        return;
+                    }
+                }
+
+                let axes = pad.axes;
+                if (axes && axes.length >= 1) {
+                    let val = axes[0];
+                    let hit = true;
+                    if (val < -0.5) {
+                        if (!padDown) carousel.moveLeft();
+                    } else if (val > 0.5) {
+                        if (!padDown) carousel.moveRight();
+                    } else {
+                        hit = false;
+                    }
+                    if (hit) {
+                        that.padDown = true;
+                        return;
+                    }
+                }
+            }
+        }     
+        that.padDown = false;       
+    }
+
+    createAnimationListener() {
+        let that = this;
+        return () => {
+            if (that.state.mode === this.ModeEnum["menu"]) {
+                that.pollGamepads(that);
+                requestAnimationFrame(that.animationListener);            
+            }
+        }
     }
 
     createKeyUpListener() {
@@ -54,14 +120,6 @@ export default class App extends Component {
     }
 
     render() {
-        const statusBar = `
-        <div
-            class="ldBar label-center"
-            data-value="35"
-            data-preset="circle"
-        ></div>
-        `;        
-
          return (
             <React.StrictMode>
                 <div>                    
@@ -84,6 +142,3 @@ export default class App extends Component {
         );
     }
 }
-
-
-

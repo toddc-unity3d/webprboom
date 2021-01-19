@@ -4,14 +4,13 @@ import { Line } from 'rc-progress';
 import './Loading.css';
 
 export default class Loading extends Component {
-    constructor(props) {
-        super(props);
-        setInterval(() => this.setState({ percent: this.state.percent + 1}), 100);
-    }
-
     state = {
         percent: 0
     };
+
+    componentDidMount() {
+        setInterval(() => this.setState({ percent: this.state.percent + 1}), 100);
+    }
 
     render() {
         return (    

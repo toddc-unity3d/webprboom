@@ -4,6 +4,7 @@ import Carousel from 'react-spring-3d-carousel';
 
 import doom1Image from './images/doom1.png';
 import freedoom1Image from './images/freedoom1.png';
+import freedoom2Image from './images/freedoom2.png';
 
 import './BoomCarousel.css';
 
@@ -23,7 +24,7 @@ export default class BoomCarousel extends Component {
         },
         {
             key: "freedoom2",
-            content: <img src={freedoom1Image} alt="3" />
+            content: <img src={freedoom2Image} alt="3" />
         }
     ].map((slide, index) => {
         return { 
