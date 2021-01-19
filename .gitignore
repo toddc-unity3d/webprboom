@@ -29,8 +29,6 @@ autom4te.cache/*
 *.wav
 
 *.bc
-*.js
-*.html
 *.data
 *.wasm
 prboom

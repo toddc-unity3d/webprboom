@@ -1,0 +1,37 @@
+.header {
+    padding: 5vh 0 2vh 0;
+}
+
+.header img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80vw;
+    max-height: 10vh;
+}
+
+.footer {
+    padding: 4vh 0 0 0;
+}
+
+.footer img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80vw;
+    max-height: 10vh;
+}
+
+.BoomCarousel-outer {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 90vw;
+    height: calc(90vw * .555);
+    max-height: 60vh;
+    max-width: calc(60vh * 1.8);
+    position: relative;
+}
+
+.BoomCarousel-outer img {
+    cursor: pointer;
+}
