@@ -60,6 +60,7 @@ export default class App extends Component {
 
         Module.canvas = canvas;
         Module.elementPointerLock = true;
+        Module.setWindowTitle = () => { return window.title; }
         Module.locateFile = (path, prefix) => { return key + "/" + path; }
         Module.setStatus = (status) => {
             let loading = status.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
