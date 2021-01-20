@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import BoomCarousel from './BoomCarousel.js'
 import Loading from './Loading.js'
 
-import titleImage from './images/title.png';
-import footerImage from './images/footer.png';
-import doom1Image from './images/doom1.png';
-import freedoom1Image from './images/freedoom1.png';
-import freedoom2Image from './images/freedoom2.png';
+import titleImage from './images/title-large.png';
+import footerImage from './images/footer-large.png';
+import doom1Image from './images/doom1-1024.png';
+import freedoom1Image from './images/freedoom1-1024.png';
+import freedoom2Image from './images/freedoom2-1024.png';
 
 import './App.css';
 

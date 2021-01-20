@@ -1,17 +1,17 @@
 .Header {
-    padding: 5vh 0 2vh 0;
+    padding: 0 0 1vh 0;
 }
 
 .Header img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    max-width: 80vw;
-    max-height: 10vh;
+    max-width: 58vw;
+    max-height: 9vh;
 }
 
 .Footer {
-    padding: 4vh 0 0 0;
+    padding: 3vh 0 0 0;
 }
 
 .Footer img {
@@ -19,7 +19,7 @@
     margin-left: auto;
     margin-right: auto;
     max-width: 80vw;
-    max-height: 10vh;
+    max-height: 7vh;
 }
 
 .BoomCarousel-outer {
@@ -27,8 +27,8 @@
     overflow: hidden;
     width: 90vw;
     height: calc(90vw * .555);
-    max-height: 60vh;
-    max-width: calc(60vh * 1.8);
+    max-height: 55vh;
+    max-width: calc(55vh * 1.8);
     position: relative;
 }
 
