@@ -61,6 +61,8 @@
 #include "r_demo.h"
 #include "r_fps.h"
 
+#include "emscripten.h"
+
 extern patchnum_t hu_font[HU_FONTSIZE];
 extern boolean  message_dontfuckwithme;
 
@@ -1044,14 +1046,20 @@ static void M_QuitResponse(int ch)
 
     // wait till all sounds stopped or 3 seconds are over
     i = 30;
-    while (i>0) {
-      I_uSleep(100000); // CPhipps - don't thrash cpu in this loop
+    while (i>0) {      
+      // emscripten    
+      //I_uSleep(100000); // CPhipps - don't thrash cpu in this loop
       if (!I_AnySoundStillPlaying())
         break;
       i--;
     }
   }
+
+#if 1
+  emscripten_force_exit(0);
+#else  
   exit(0); // killough
+#endif  
 }
 
 void M_QuitDOOM(int choice)
