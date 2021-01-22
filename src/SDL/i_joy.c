@@ -80,12 +80,15 @@ void I_PollJoystick(void)
     (SDL_JoystickGetButton(joystick, 2)<<2) |
     (SDL_JoystickGetButton(joystick, 3)<<3) |
     (SDL_JoystickGetButton(joystick, 4)<<4) |
-    (SDL_JoystickGetButton(joystick, 5)<<5);
+    (SDL_JoystickGetButton(joystick, 5)<<5) |
+    (SDL_JoystickGetButton(joystick, 6)<<6) |
+    (SDL_JoystickGetButton(joystick, 7)<<7) |
+    (SDL_JoystickGetButton(joystick, 10)<<8);
 
   // for (int i = 0; i < 16; i++) {
   //   int val = SDL_JoystickGetButton(joystick, i);
   //   if (val) {
-  //     printf("Button down: %d\n", i);
+  //     printf("Button down: %d %d\n", i, sizeof(ev.data1));
   //   }
   // }
 

@@ -4111,10 +4111,20 @@ boolean M_Responder (event_t* ev) {
   if (ev->type == ev_joystick) {
     int delay = 10;
     if (joywait < I_GetTime()) {
-      if (!menuactive && !usergame && ev->type == ev_joystick &&
-          ev->data1) {
+      if (!menuactive && (
+          (!usergame && ev->type == ev_joystick && ev->data1) ||
+          ((ev->data1 & 0x1c0 ) == 0x1c0))) {          
         M_StartControlPanel();
         S_StartSound(NULL, sfx_swtchn);
+        joywait = I_GetTime() + delay;
+        return true;
+      }
+
+      if (menuactive && ((ev->data1 & 0x1c0 ) == 0x1c0)) {
+        currentMenu->lastOn = itemOn;
+        M_ClearMenus ();
+        S_StartSound(NULL,sfx_swtchx);
+        joywait = I_GetTime() + delay;
         return true;
       }
 
@@ -4155,6 +4165,17 @@ boolean M_Responder (event_t* ev) {
         }
         if (ev->data1 & 8) {
           ch = 0;  // meaningless, just to get you past the check for -1
+          joywait = I_GetTime() + delay;
+        }
+      }
+
+
+      if ((messageToPrint) && (messageNeedsInput == true)) {
+        if (ev->data1 & 1) {
+          ch = 'y';
+          joywait = I_GetTime() + delay;
+        } else if (ev->data1 & 2) {
+          ch = 'n';
           joywait = I_GetTime() + delay;
         }
       }
