@@ -20,6 +20,7 @@ export default class App extends Component {
     }
 
     padDown = false;
+    firstPoll = true;
 
     ModeEnum = { "menu": 1, "loading": 2, "loaded": 3 }
 
@@ -46,6 +47,8 @@ export default class App extends Component {
     componentDidMount() {
         document.addEventListener("keyup", this.keyUpListener);
         requestAnimationFrame(this.animationListener);
+        let that = this;
+        setTimeout(() => {that.firstPoll = false;}, 200);
     }
 
     componentDidUpdate() {
@@ -54,27 +57,43 @@ export default class App extends Component {
         }
     }
 
-    onGameSelected(key) {
+    onGameSelected(key) {        
         let canvas = document.getElementById('GameCanvas');
-        window.Module = {}
-        let Module = window.Module;
-
-        Module.canvas = canvas;
-        Module.elementPointerLock = true;
-        Module.onAbort = (msg) => { alert(msg); window.location.reload(); }
-        Module.onExit = () => { window.location.reload(); }
-        Module.setWindowTitle = () => { return window.title; }
-        Module.locateFile = (path, prefix) => { return key + "/" + path; }
-        Module.setStatus = (status) => {
-            let loading = status.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
-            if (loading) {
-                let progress = loading[2] / loading[4] * 100;
-                this.setState({ loadingPercent: progress });
-                if (progress === 100) {
-                    window.Module.canvas.style.display = 'block';
-                    this.setState({ mode: this.ModeEnum["loaded"] });
+        window.Module = {
+            canvas: canvas,           
+            elementPointerLock: true,
+            onAbort: (msg) => { alert(msg); window.location.reload(); },
+            onExit: () => { window.location.reload(); },
+            setWindowTitle: () => { return window.title; },
+            locateFile: (path, prefix) => { return key + "/" + path; },
+            setStatus: (status) => {
+                let loading = status.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+                if (loading) {
+                    let progress = loading[2] / loading[4] * 100;
+                    this.setState({ loadingPercent: progress });
+                    if (progress === 100) {
+                        canvas.style.display = 'block';
+                        this.setState({ mode: this.ModeEnum["loaded"] });
+                    }
                 }
-            }
+            },
+            preRun: [() => {
+                const DB = '/idxdb';
+                let FS = window.FS;            
+                FS.mkdir(DB);            
+                FS.mount(FS.filesystems.IDBFS, {}, DB);
+                FS.syncfs(true, function (err) {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        const GPATH = DB + '/' + key;
+                        let res = FS.analyzePath(GPATH, true);
+                        if (!res.exists) {
+                            FS.mkdir(GPATH);
+                        }
+                    }    
+                });
+            }]                    
         }
 
         var script = document.createElement('script');
@@ -93,6 +112,9 @@ export default class App extends Component {
                 navigator.webkitGetGamepads : []);
         for (let i = 0; i < gamepads.length; i++) {
             if (gamepads[i]) {
+                let firstPoll = that.firstPoll;
+                that.firstPoll = false;
+
                 let pad = gamepads[i];
                 let buttons = pad.buttons;
                 if (buttons && buttons.length >= 16) {
@@ -104,7 +126,7 @@ export default class App extends Component {
                         if (!padDown) carousel.moveRight();
                     }
                     else if (buttons[0].pressed) {
-                        if (!padDown) carousel.select();
+                        if (!padDown && !firstPoll) carousel.select();
                     } else {
                         hit = false;
                     }

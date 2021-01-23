@@ -149,7 +149,7 @@ CFLAGS = -I$(top_srcdir)/src # -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
 CPP = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/emcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DHAVE_CONFIG_H
+DEFS = -DHAVE_CONFIG_H -DGAME=\"$(GAME)\"
 DEPDIR = .deps
 DOOMWADDIR = /usr/local/share/games/doom
 ECHO_C = 

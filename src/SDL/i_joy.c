@@ -117,11 +117,6 @@ void I_PollJoystick(void)
 
   D_PostEvent(&ev);
 #endif
-
-  // emscripten
-  // int num_joysticks =  emscripten_get_num_gamepads();
-  // joystick = (num_joysticks >= 1) ? 1 : 0;
-  // lprintf(LO_INFO, "joysticks %d\n", num_joysticks);  
 }
 
 // emscripten

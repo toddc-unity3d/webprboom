@@ -87,6 +87,8 @@
 #include "r_demo.h"
 #include "r_fps.h"
 
+#include "emscripten.h"
+
 #define SAVEGAMESIZE  0x20000
 #define SAVESTRINGSIZE  24
 
@@ -259,6 +261,8 @@ int defaultskill;               //note 1-based
 // killough 2/8/98: make corpse queue variable in size
 int    bodyqueslot, bodyquesize;        // killough 2/8/98
 mobj_t **bodyque = 0;                   // phares 8/10/98
+
+boolean waitForButtonRelease = false;
 
 static void G_DoSaveGame (boolean menu);
 static const byte* G_ReadDemoHeader(const byte* demo_p, size_t size, boolean failonerror);
@@ -712,7 +716,7 @@ boolean G_Responder (event_t* ev)
   !(paused & 2) && !(automapmode & am_active) &&
   ((ev->type == ev_keydown) ||
    (ev->type == ev_mouse && ev->data1) ||
-   (ev->type == ev_joystick && ev->data1)) ?
+   (ev->type == ev_joystick && ev->data1 && !waitForButtonRelease)) ?
   M_StartControlPanel(), true : false;
     }
 
@@ -752,12 +756,17 @@ boolean G_Responder (event_t* ev)
       return true;    // eat events
 
     case ev_joystick:
-      joybuttons[0] = ev->data1 & 1;
-      joybuttons[1] = ev->data1 & 2;
-      joybuttons[2] = ev->data1 & 4;
-      joybuttons[3] = ev->data1 & 8;
-      joybuttons[4] = ev->data1 & 16;
-      joybuttons[5] = ev->data1 & 32;
+      if (waitForButtonRelease && ev->data1) {
+        memset(joyarray, 0, sizeof(joyarray));
+      } else {     
+        waitForButtonRelease = false;
+        joybuttons[0] = ev->data1 & 1;
+        joybuttons[1] = ev->data1 & 2;
+        joybuttons[2] = ev->data1 & 4;
+        joybuttons[3] = ev->data1 & 8;
+        joybuttons[4] = ev->data1 & 16;
+        joybuttons[5] = ev->data1 & 32;
+      }
 
       joyxmove = ev->data2;
       joyymove = ev->data3;
@@ -1787,6 +1796,8 @@ static void G_DoSaveGame (boolean menu)
 
   G_SaveGameName(name,sizeof(name),savegameslot, demoplayback && !menu);
 
+//printf("## save game=%s\n", name);  
+
   description = savedescription;
 
   save_p = savebuffer = malloc(savegamesize);
@@ -1900,6 +1911,15 @@ static void G_DoSaveGame (boolean menu)
   savebuffer = save_p = NULL;
 
   savedescription[0] = 0;
+
+  // Don't forget to sync to make sure you store it to IndexedDB
+  EM_ASM(
+    FS.syncfs(function (err) {
+      if (err) {
+        console.error("Error during save: " + err);
+      }
+    });
+  );  
 }
 
 static skill_t d_skill;

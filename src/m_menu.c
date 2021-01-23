@@ -62,11 +62,14 @@
 #include "r_fps.h"
 
 #include "emscripten.h"
+#include <time.h>
 
 extern patchnum_t hu_font[HU_FONTSIZE];
 extern boolean  message_dontfuckwithme;
 
 extern boolean chat_on;          // in heads-up code
+
+extern boolean waitForButtonRelease;
 
 //
 // defaulted values
@@ -91,6 +94,8 @@ int messageToPrint;  // 1 = message to be printed
 
 // CPhipps - static const
 static const char* messageString; // ...and here is the message string!
+
+static boolean isJoystick = false;
 
 // message x & y
 int     messx;
@@ -758,6 +763,7 @@ void M_LoadSelect(int choice)
 {
   // CPhipps - Modified so savegame filename is worked out only internal
   //  to g_game.c, this only passes the slot.
+  waitForButtonRelease = true;
 
   G_LoadGame(choice, false); // killough 3/16/98, 5/15/98: add slot, cmd
 
@@ -885,6 +891,7 @@ void M_DrawSave(void)
 //
 static void M_DoSave(int slot)
 {
+  waitForButtonRelease = true;    
   G_SaveGame (slot,savegamestrings[slot]);
   M_ClearMenus ();
 
@@ -898,14 +905,34 @@ static void M_DoSave(int slot)
 //
 void M_SaveSelect(int choice)
 {
+  char *buff = NULL;
+  if (isJoystick) {
+    time_t timer;
+    char tbuff[128];
+    struct tm* tm_info;
+
+    timer = time(NULL);
+    tm_info = localtime(&timer);
+
+    strftime(tbuff, 26, "%m-%d-%Y %I:%M:%S %p", tm_info);
+    buff = tbuff;
+  }
+
   // we are going to be intercepting all chars
   saveStringEnter = 1;
 
   saveSlot = choice;
-  strcpy(saveOldString,savegamestrings[choice]);
-  if (!strcmp(savegamestrings[choice],s_EMPTYSTRING)) // Ty 03/27/98 - externalized
-    savegamestrings[choice][0] = 0;
-  saveCharIndex = strlen(savegamestrings[choice]);
+  
+  if (buff) {
+    strcpy(saveOldString,savegamestrings[choice]);
+    strcpy(savegamestrings[choice], buff);
+    saveCharIndex = strlen(savegamestrings[choice]);
+  } else {
+    strcpy(saveOldString,savegamestrings[choice]);
+    if (!strcmp(savegamestrings[choice],s_EMPTYSTRING)) // Ty 03/27/98 - externalized
+      savegamestrings[choice][0] = 0;
+    saveCharIndex = strlen(savegamestrings[choice]);
+  }
 }
 
 //
@@ -4091,7 +4118,6 @@ static int M_IndexInChoices(const char *str, const char **choices) {
 // Examines incoming keystrokes and button pushes and determines some
 // action based on the state of the system.
 //
-
 boolean M_Responder (event_t* ev) {
   int    ch;
   int    i;
@@ -4108,25 +4134,22 @@ boolean M_Responder (event_t* ev) {
 
   // Process joystick input
 
+  isJoystick = false;
   if (ev->type == ev_joystick) {
+    isJoystick = true;
     int delay = 10;
-    if (joywait < I_GetTime()) {
-      if (!menuactive && (
-          (!usergame && ev->type == ev_joystick && ev->data1) ||
-          ((ev->data1 & 0x1c0 ) == 0x1c0))) {          
-        M_StartControlPanel();
-        S_StartSound(NULL, sfx_swtchn);
-        joywait = I_GetTime() + delay;
-        return true;
-      }
 
-      if (menuactive && ((ev->data1 & 0x1c0 ) == 0x1c0)) {
-        currentMenu->lastOn = itemOn;
-        M_ClearMenus ();
-        S_StartSound(NULL,sfx_swtchx);
-        joywait = I_GetTime() + delay;
-        return true;
-      }
+    if (!menuactive && (
+        (!usergame && ev->type == ev_joystick && ev->data1 && !waitForButtonRelease) ||
+        ((ev->data1 & 0x1c0 ) == 0x1c0))) {          
+      M_StartControlPanel();
+      S_StartSound(NULL, sfx_swtchn);
+      joywait = I_GetTime() + delay;
+      return true;
+    }
+
+    //if (joywait < I_GetTime()) {
+    if (!joywait) {
 
       if (ev->data3 == -1) {
         ch = key_menu_up;  // phares 3/7/98
@@ -4150,7 +4173,11 @@ boolean M_Responder (event_t* ev) {
       }
 
       if (ev->data1 & 2) {
-        ch = key_menu_backspace;  // phares 3/7/98
+        if (saveStringEnter || (currentMenu->prevMenu == NULL)) {
+          ch = key_menu_escape;
+        } else {
+          ch = key_menu_backspace;  // phares 3/7/98
+        }
         joywait = I_GetTime() + delay;
       }
 
@@ -4169,7 +4196,6 @@ boolean M_Responder (event_t* ev) {
         }
       }
 
-
       if ((messageToPrint) && (messageNeedsInput == true)) {
         if (ev->data1 & 1) {
           ch = 'y';
@@ -4181,6 +4207,7 @@ boolean M_Responder (event_t* ev) {
       }
     } else {
       if (!ev->data1 && !ev->data2 && !ev->data3) {
+        isJoystick = false;
         joywait = 0;
       }
     }

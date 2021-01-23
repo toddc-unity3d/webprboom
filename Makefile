@@ -18,6 +18,7 @@
 # Top level automake Makefile.am for LxDoom
 #
 
+export GAME
 
 pkgdatadir = $(datadir)/prboom
 pkglibdir = $(libdir)/prboom
@@ -97,7 +98,7 @@ AUTOMAKE = ${SHELL} /home/csmith/work/webDOOM/autotools/missing --run automake-1
 AWK = mawk
 CC = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/emcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -I$(top_srcdir)/src
+CFLAGS = -I$(top_srcdir)/src -DGAME=\"$(GAME)\"
 CPP = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/emcc -E
 CPPFLAGS = 
 CYGPATH_W = echo

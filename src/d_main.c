@@ -780,7 +780,9 @@ static void IdentifyVersion (void)
   //V.Aguilar (5/30/99): In LiNUX, default to $HOME/.lxdoom
   {
     // CPhipps - use DOOMSAVEDIR if defined
-    char* p = getenv("DOOMSAVEDIR");
+    //char* p = getenv("DOOMSAVEDIR");
+    // emscripten
+    char* p = "/idxdb/" GAME;
 
     if (p != NULL)
       if (strlen(p) > PATH_MAX-12) p = NULL;
