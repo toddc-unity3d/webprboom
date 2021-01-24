@@ -48,7 +48,8 @@ export default class App extends Component {
         document.addEventListener("keyup", this.keyUpListener);
         requestAnimationFrame(this.animationListener);
         let that = this;
-        setTimeout(() => {that.firstPoll = false;}, 200);
+        setTimeout(() => {document.getElementById('root').style.display = 'block'}, 100);
+        setTimeout(() => {that.firstPoll = false;}, 200);        
     }
 
     componentDidUpdate() {
