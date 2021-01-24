@@ -71,6 +71,8 @@
 #include "r_demo.h"
 #include "r_fps.h"
 
+#include "emscripten.h"
+
 /* cph - disk icon not implemented */
 static inline void I_BeginRead(void) {}
 static inline void I_EndRead(void) {}
@@ -910,6 +912,15 @@ void M_SaveDefaults (void)
     }
 
   fclose (f);
+
+    // Don't forget to sync to make sure you store it to IndexedDB
+    EM_ASM(
+      FS.syncfs(function (err) {
+        if (err) {
+          console.error("Error during config save: " + err);
+        }
+      });
+    );  
   }
 
 /*
@@ -961,7 +972,9 @@ void M_LoadDefaults (void)
   if (i && i < myargc-1)
     defaultfile = myargv[i+1];
   else {
-    const char* exedir = I_DoomExeDir();
+    //const char* exedir = I_DoomExeDir();
+    const char* exedir = "/idxdb/" GAME;        
+
     defaultfile = malloc(PATH_MAX+1);
     /* get config file from same directory as executable */
 #ifdef HAVE_SNPRINTF

@@ -59,11 +59,12 @@ export default class App extends Component {
 
     onGameSelected(key) {        
         let canvas = document.getElementById('GameCanvas');
+        let reload = () => { setTimeout(() => {window.location.reload()}, 50); }; 
         window.Module = {
             canvas: canvas,           
             elementPointerLock: true,
-            onAbort: (msg) => { alert(msg); window.location.reload(); },
-            onExit: () => { window.location.reload(); },
+            onAbort: (msg) => { alert(msg); reload(); },
+            onExit: () => { reload(); },
             setWindowTitle: () => { return window.title; },
             locateFile: (path, prefix) => { return key + "/" + path; },
             setStatus: (status) => {
