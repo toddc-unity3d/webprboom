@@ -96,8 +96,8 @@ export default class App extends Component {
         Storage.writeValue(this.STORAGE_LASTGAME_KEY, key, true);
         let canvas = document.getElementById('GameCanvas');
         window.Module = {
-             canvas: canvas,           
-             elementPointerLock: true,
+            canvas: canvas,           
+            elementPointerLock: true,
             onAbort: (msg) => { alert(msg); window.location.reload(); },
             onExit: () => { window.location.reload(); },
             setWindowTitle: () => { return window.title; },
