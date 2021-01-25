@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BoomCarousel from './BoomCarousel.js'
 import Loading from './Loading.js'
-
+import * as Storage from './storage';
 import titleImage from './images/title-large.png';
 import footerImage from './images/footer-large.png';
 import doom1Image from './images/doom1-1024.png';
@@ -17,10 +17,18 @@ export default class App extends Component {
         this.carouselRef = React.createRef();
         this.keyUpListener = this.createKeyUpListener();
         this.animationListener = this.createAnimationListener();
+        //read the slide info
+        Storage.init();
+        let slideKey = Storage.readValue(this.STORAGE_LASTGAME_KEY);
+        this.lastGameSlideKey = slideKey === null ? '' : slideKey;
+        this.reorderedSlides = this.reorderSlides();
     }
 
     padDown = false;
     firstPoll = true;
+
+    //Last game key
+    STORAGE_LASTGAME_KEY = "lastGameKey";
 
     ModeEnum = { "menu": 1, "loading": 2, "loaded": 3 }
 
@@ -44,6 +52,33 @@ export default class App extends Component {
         }
     ]
 
+    lastGameSlideKey = '';
+    reorderedSlides = this.slides;
+
+    reorderSlides() {       
+        let len = this.slides.length;
+        let index = 0;
+        let newSlides = [];
+
+        //find the index of the saved slide
+        for (let t = 0; t < len; t++) {
+            if (this.slides[t].key === this.lastGameSlideKey) {
+                index = t;
+                break;
+            }
+        }
+        //reorder slides starting with the saved slide 
+        for (let i = 0; i < len; i++) {
+            if (index >= len) {
+                index = index - len;               
+            }
+            newSlides[i] = this.slides[index];
+            index++;
+        }
+        console.log("Reordered Slides.." + JSON.stringify(newSlides));
+        return newSlides;
+    }
+
     componentDidMount() {
         document.addEventListener("keyup", this.keyUpListener);
         requestAnimationFrame(this.animationListener);
@@ -58,7 +93,8 @@ export default class App extends Component {
         }
     }
 
-    onGameSelected(key) {        
+    onGameSelected(key) {       
+        Storage.writeValue(this.STORAGE_LASTGAME_KEY, key, true);
         let canvas = document.getElementById('GameCanvas');
         let reload = () => { setTimeout(() => {window.location.reload()}, 50); }; 
         window.Module = {
@@ -199,7 +235,7 @@ export default class App extends Component {
                     {this.state.mode === this.ModeEnum["loading"] ?
                         <Loading percent={this.state.loadingPercent} /> : null}
                     <BoomCarousel
-                        slides={this.slides}
+                        slides={this.reorderedSlides}
                         ref={this.carouselRef}
                         onSelected={(key) => { this.onGameSelected(key) }}
                     />
