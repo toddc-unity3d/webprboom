@@ -4,7 +4,7 @@
 
 WebPrBoom is a fork of the excellent [WebDOOM](https://github.com/UstymUkhman/webDOOM) WebAssembly port of [PrBoom](http://prboom.sourceforge.net/) that was originally developed by [UstymUkhman](https://github.com/UstymUkhman).
 
-The original goal of WebPrBoom was to provide a version of PrBoom that is compatible with the Xbox One (series X/S) browser. Currently, WebPrBoom works well for most devices that support WebAssembly and have a physical input mechanism (gamepad, mouse/keyboard, etc.).
+The original goal of WebPrBoom was to provide a version of PrBoom that is compatible with the Xbox One (series X/S) browser. Currently, WebPrBoom works well for most devices (including Xbox One) that support WebAssembly and have a physical input mechanism (gamepad, mouse/keyboard, etc.).
 
 ## Play
 
