@@ -26,13 +26,15 @@ or
 
 ## Gamepad Controls
 
-    Move          : D-Pad or Left Analog Stick
-    Run           : X Button 
-    Fire          : A Button 
-    Strafe        : B Button 
-    Use           : Y Button 
-    Prev Weapon   : Left Shoulder (LB) 
-    Next Weapon   : Right Shoulder (RB) 
-    Show Menu     : Left Trigger (LT) + Right Trigger (RT) + Left Analog Stick Click
-    Fullscreen    : View Button (Previously back button) (Only for Xbox One)
-    Gamepad mode  : Menu Button (Previously start button) (Only for Xbox One)
+|Name|Control|Description|
+|-|-|-|
+|Move|D-Pad or Left Analog Stick| |
+|Run|X Button| | 
+|Fire|A Button| | 
+|Strafe|B Button| | 
+|Use|Y Button| | 
+|Prev Weapon|Left Shoulder (LB)| |
+|Next Weapon|Right Shoulder (RB)| |
+|Show Menu|Left Trigger (LT) + Right Trigger (RT) + Left Analog Stick Click|3 button combo|
+|Fullscreen|View Button (Previously back button)|Only for Xbox One|
+|Gamepad mode|Menu Button (Previously start button)|Only for Xbox One|
