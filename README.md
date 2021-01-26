@@ -32,9 +32,9 @@ Equivalent controls for other controller types (PS4, Switch, etc.) should also b
 
 |Name|Controls|Description|
 |-|-|-|
-|Move|D-Pad or Left Analog Stick| Moves player |
+|Move|D-Pad or Left Analog Stick| Player moves |
 |Run|X Button| Player runs | 
-|Fire|A Button| Fires weapon | 
+|Fire|A Button| Fire weapon | 
 |Strafe|B Button| Strafe when moving left and right | 
 |Use|Y Button| Opens doors, etc. | 
 |Previous Weapon|Left Shoulder (LB)| Select the previous weapon |
