@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import BoomCarousel from './BoomCarousel.js'
 import Loading from './Loading.js'
-import * as Storage from './storage';
+import * as Storage from './Storage.js'
+import * as Log from './Log.js'
+
 import titleImage from './images/title-large.png';
 import footerImage from './images/footer-large.png';
 import doom1Image from './images/doom1-1024.png';
@@ -14,21 +16,30 @@ export default class App extends Component {
     constructor(props) {
         super(props);
 
+        Storage.init();
+
         this.carouselRef = React.createRef();
         this.keyUpListener = this.createKeyUpListener();
         this.animationListener = this.createAnimationListener();
-        //read the slide info
-        Storage.init();
-        let slideKey = Storage.readValue(this.STORAGE_LASTGAME_KEY);
-        this.lastGameSlideKey = slideKey === null ? '' : slideKey;
-        this.reorderedSlides = this.reorderSlides();
+        this.slides = this.orderSlides([
+            {
+                key: "doom1",
+                content: <img src={doom1Image} alt="1" />
+            },
+            {
+                key: "freedoom1",
+                content: <img src={freedoom1Image} alt="2" />
+            },
+            {
+                key: "freedoom2",
+                content: <img src={freedoom2Image} alt="3" />
+            }],
+            Storage.getLastGame()
+        );
     }
 
     padDown = false;
     firstPoll = true;
-
-    //Last game key
-    STORAGE_LASTGAME_KEY = "lastGameKey";
 
     ModeEnum = { "menu": 1, "loading": 2, "loaded": 3 }
 
@@ -37,45 +48,30 @@ export default class App extends Component {
         loadingPercent: 0
     }
 
-    slides = [
-        {
-            key: "doom1",
-            content: <img src={doom1Image} alt="1" />
-        },
-        {
-            key: "freedoom1",
-            content: <img src={freedoom1Image} alt="2" />
-        },
-        {
-            key: "freedoom2",
-            content: <img src={freedoom2Image} alt="3" />
+    orderSlides(slides, lastGame) {
+        if (!lastGame) {
+            return slides;
         }
-    ]
 
-    lastGameSlideKey = '';
-    reorderedSlides = this.slides;
-
-    reorderSlides() {       
-        let len = this.slides.length;
+        let len = slides.length;
         let index = 0;
-        let newSlides = [];
+        let newSlides = new Array(len);
 
-        //find the index of the saved slide
         for (let t = 0; t < len; t++) {
-            if (this.slides[t].key === this.lastGameSlideKey) {
+            if (slides[t].key === lastGame) {
                 index = t;
                 break;
             }
         }
-        //reorder slides starting with the saved slide 
+
         for (let i = 0; i < len; i++) {
             if (index >= len) {
-                index = index - len;               
+                index = index - len;
             }
-            newSlides[i] = this.slides[index];
+            newSlides[i] = slides[index];
             index++;
         }
-        console.log("Reordered Slides.." + JSON.stringify(newSlides));
+        Log.info("Reordered slides.");
         return newSlides;
     }
 
@@ -83,8 +79,8 @@ export default class App extends Component {
         document.addEventListener("keyup", this.keyUpListener);
         requestAnimationFrame(this.animationListener);
         let that = this;
-        setTimeout(() => {document.getElementById('root').style.display = 'block'}, 100);
-        setTimeout(() => {that.firstPoll = false;}, 200);        
+        setTimeout(() => { document.getElementById('root').style.display = 'block' }, 100);
+        setTimeout(() => { that.firstPoll = false; }, 200);
     }
 
     componentDidUpdate() {
@@ -93,13 +89,14 @@ export default class App extends Component {
         }
     }
 
-    onGameSelected(key) {       
-        Storage.writeValue(this.STORAGE_LASTGAME_KEY, key, true);
+    onGameSelected(key) {
+        Storage.setLastGame(key);
         let canvas = document.getElementById('GameCanvas');
-        let reload = () => { setTimeout(() => {window.location.reload()}, 50); }; 
+        let reload = () => { setTimeout(() => { window.location.reload() }, 50); };
         window.Module = {
-            canvas: canvas,           
+            canvas: canvas,
             elementPointerLock: true,
+            prSyncFs: () => { Storage.syncFs(); },
             onAbort: (msg) => { alert(msg); reload(); },
             onExit: () => { reload(); },
             setWindowTitle: () => { return window.title; },
@@ -115,23 +112,7 @@ export default class App extends Component {
                     }
                 }
             },
-            preRun: [() => {
-                const DB = '/idxdb';
-                let FS = window.FS;            
-                FS.mkdir(DB);            
-                FS.mount(FS.filesystems.IDBFS, {}, DB);
-                FS.syncfs(true, function (err) {
-                    if (err) {
-                        console.error(err);
-                    } else {
-                        const GPATH = DB + '/' + key;
-                        let res = FS.analyzePath(GPATH, true);
-                        if (!res.exists) {
-                            FS.mkdir(GPATH);
-                        }
-                    }    
-                });
-            }]                    
+            preRun: [() => { Storage.mountAndPopulateFs(key); }]
         }
 
         var script = document.createElement('script');
@@ -235,7 +216,7 @@ export default class App extends Component {
                     {this.state.mode === this.ModeEnum["loading"] ?
                         <Loading percent={this.state.loadingPercent} /> : null}
                     <BoomCarousel
-                        slides={this.reorderedSlides}
+                        slides={this.slides}
                         ref={this.carouselRef}
                         onSelected={(key) => { this.onGameSelected(key) }}
                     />
