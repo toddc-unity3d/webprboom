@@ -26,6 +26,10 @@ or
 
 ## Gamepad Controls
 
+The following controls are described using the Xbox One controller. 
+
+Equivalent controls for other controller types (PS4, Switch, etc.) should also be compatible.
+
 |Name|Control|Description|
 |-|-|-|
 |Move|D-Pad or Left Analog Stick| |
