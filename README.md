@@ -32,13 +32,13 @@ Equivalent controls for other controller types (PS4, Switch, etc.) should also b
 
 |Name|Controls|Description|
 |-|-|-|
-|Move|D-Pad or Left Analog Stick| |
-|Run|X Button| | 
-|Fire|A Button| | 
-|Strafe|B Button| | 
-|Use|Y Button| | 
-|Previous Weapon|Left Shoulder (LB)| |
-|Next Weapon|Right Shoulder (RB)| |
+|Move|D-Pad or Left Analog Stick| Moves player |
+|Run|X Button| Player runs | 
+|Fire|A Button| Fires weapon | 
+|Strafe|B Button| Strafe when moving left and right | 
+|Use|Y Button| Opens doors, etc. | 
+|Previous Weapon|Left Shoulder (LB)| Select the previous weapon |
+|Next Weapon|Right Shoulder (RB)| Select the next weapon |
 |Show Menu|Left Trigger (LT) + Right Trigger (RT) + Left Analog Stick Click|**3 button combo**<br><br>This three button combo is required due to the Xbox One reserving the "Screen" and "Menu" buttons for browser-specific controls.<br><br>To enter the menu, hold down the left and right trigger buttons and click (press down) on the left analog stick.|
-|Full screen Toggle|View Button (Previously back button)|**Only for Xbox One**<br><br>This button toggles between full screen and browser (containing the address bar, etc.) modes.|
-|Controls Menu|Menu Button (Previously start button)|**Only for Xbox One**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
+|Full screen Toggle|View Button (Previously back button)|**Xbox One Only**<br><br>This button toggles between full screen and browser (containing the address bar, etc.) modes.|
+|Controls Menu|Menu Button (Previously start button)|**Xbox One Only**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
