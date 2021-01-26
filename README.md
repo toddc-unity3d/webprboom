@@ -33,8 +33,8 @@ or
 |Fire|A Button| | 
 |Strafe|B Button| | 
 |Use|Y Button| | 
-|Prev Weapon|Left Shoulder (LB)| |
+|Previous Weapon|Left Shoulder (LB)| |
 |Next Weapon|Right Shoulder (RB)| |
 |Show Menu|Left Trigger (LT) + Right Trigger (RT) + Left Analog Stick Click|3 button combo|
-|Fullscreen|View Button (Previously back button)|Only for Xbox One|
-|Gamepad mode|Menu Button (Previously start button)|Only for Xbox One|
+|Fullscreen Toggle|View Button (Previously back button)|Only for Xbox One|
+|Input Toggle|Menu Button (Previously start button)|Only for Xbox One|
