@@ -35,6 +35,6 @@ or
 |Use|Y Button| | 
 |Previous Weapon|Left Shoulder (LB)| |
 |Next Weapon|Right Shoulder (RB)| |
-|Show Menu|Left Trigger (LT) + Right Trigger (RT) + Left Analog Stick Click|3 button combo|
-|Full screen Toggle|View Button (Previously back button)|Only for Xbox One.<br><br>This button will toggle between full screen and browser (containg the address bar, etc.) modes.|
-|Controls Menu|Menu Button (Previously start button)|Only for Xbox One<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
+|Show Menu|Left Trigger (LT) + Right Trigger (RT) + Left Analog Stick Click|**3 button combo**|
+|Full screen Toggle|View Button (Previously back button)|**Only for Xbox One**<br><br>This button will toggle between full screen and browser (containg the address bar, etc.) modes.|
+|Controls Menu|Menu Button (Previously start button)|**Only for Xbox One**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
