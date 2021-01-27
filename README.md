@@ -17,11 +17,12 @@ or
 ## Features
 
 * Menu to select game to play
+* Includes Doom 1 (Shareware), [Freedoom 1](https://freedoom.github.io/), and [Freedoom 2](https://freedoom.github.io/)
+* Other PrBoom compatible games can be added via custom builds (Doom 2, etc.)
 * Gamepad support for menu and games
 * Keyboard/mouse support for menu and games
 * Save/load game support (persisted in browser storage)
 * Configuration persistence (in browser storage)
-* Support for Doom 1 (Shareware), Freedoom 1, and Freedoom 2
 * Pointer lock support (for mouse input)
 
 ## Gamepad Controls
@@ -32,13 +33,16 @@ Equivalent controls for other controller types (PS4, Switch, etc.) should also b
 
 |Name|Controls|Description|
 |-|-|-|
-|Move|D-Pad or Left Analog Stick| Player moves |
-|Run|X Button| Player runs | 
-|Fire|A Button| Fire weapon | 
-|Strafe|B Button| Strafe when moving left and right | 
-|Use|Y Button| Opens doors, etc. | 
-|Previous Weapon|Left Shoulder (LB)| Select the previous weapon |
-|Next Weapon|Right Shoulder (RB)| Select the next weapon |
-|Show Menu|Left Trigger (LT) + Right Trigger (RT) + Left Analog Stick Click|**3 button combo**<br><br>This three button combo is required due to the Xbox One reserving the "Screen" and "Menu" buttons for browser-specific controls.<br><br>To enter the menu, hold down the left and right trigger buttons and click (press down) on the left analog stick.|
-|Full screen Toggle|View Button (Previously back button)|**Xbox One Only**<br><br>This button toggles between full screen and browser (containing the address bar, etc.) modes.|
-|Controls Menu|Menu Button (Previously start button)|**Xbox One Only**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
+|Move|`D-Pad` or `Left Analog Stick`| Player moves |
+|Run|`X Button`| Player runs | 
+|Fire|`A Button`| Fire weapon | 
+|Strafe|`B Button`| Strafe when moving left and right | 
+|Use|`Y Button`| Opens doors, etc. | 
+|Previous Weapon|`Left Shoulder` (LB)| Select the previous weapon |
+|Next Weapon|`Right Shoulder` (RB)| Select the next weapon |
+|Show Menu|`Left Trigger` (LT) + `Right Trigger` (RT) + `Left Analog Stick` Click|**3 button combo**<br><br>This three button combo is required due to the Xbox One reserving the `Screen` and `Menu` buttons for browser-specific controls.<br><br>To enter the menu, hold down the left and right trigger buttons and click (press down) on the left analog stick.|
+|Full screen Toggle|`View Button` (Previously back button)|**Xbox One Only**<br><br>This button toggles between full screen and browser (containing the address bar, etc.) modes.|
+|Controls Menu|`Menu Button` (Previously start button)|**Xbox One Only**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
+
+When presented with a Yes/No prompt, the `A button` corresponds to Yes and the `B button` to No.
+
