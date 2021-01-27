@@ -19,7 +19,7 @@ or
 
 <a href='http://www.youtube.com/watch?feature=player_embedded&v=FrfQZ2PJ33M' target='_blank'><img src='https://github.com/raz0red/webprboom/raw/master/webprboom.png' width='455' height='343' /></a>
 
-Click the image above to view the gameplay video.
+Click the image above to view gameplay video.
 
 ## Features
 
