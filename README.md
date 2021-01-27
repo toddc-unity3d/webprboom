@@ -15,7 +15,7 @@ or
 [https://raz0red.github.io/webprboom](https://raz0red.github.io/webprboom) 
 
 
-#### Gameplay Video
+#### Gameplay Video (Xbox Series X Web Browser)
 
 <a href='http://www.youtube.com/watch?feature=player_embedded&v=FrfQZ2PJ33M' target='_blank'><img src='https://github.com/raz0red/webprboom/raw/master/webprboom.png' width='455' height='343' /></a>
 
