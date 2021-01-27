@@ -53,7 +53,7 @@ Equivalent controls for other controller types (PS4, Switch, etc.) should also b
 
 When presented with a Yes/No prompt, the `A button` corresponds to *Yes* and the `B button` to *No*.
 
-> **Note**
+> **Note: Screen and Menu Buttons**
 > 
 > There appears to be a bug in the Xbox One Edge Browser that periodically prevents the `Screen` (full screen toggle) and `Menu` (controls menu) button presses from being processed. If this occurs, click the `Xbox button` which will cause the left side menu to appear. Next, click the `Xbox button` again to make the left menu disappear. At this point, the `Screen` and `Menu` buttons should work correctly.
 
