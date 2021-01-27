@@ -16,12 +16,12 @@ or
 
 ## Features
 
-* Menu to select game to play (Doom 1/Shareware, Freedoom 1, and Freedoom 2)
+* Menu to select game to play
 * Gamepad support for menu and games
 * Keyboard/mouse support for menu and games
 * Save/load game support (persisted in browser storage)
 * Configuration persistence (in browser storage)
-* Support for Freedoom 1 and Freedoom 2
+* Support for Doom 1 (Shareware), Freedoom 1, and Freedoom 2
 * Pointer lock support (for mouse input)
 
 ## Gamepad Controls
