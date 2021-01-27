@@ -47,7 +47,7 @@ Equivalent controls for other controller types (PS4, Switch, etc.) should also b
 |Use|`Y Button`| Opens doors, etc. | 
 |Previous Weapon|`Left Shoulder`| Select the previous weapon |
 |Next Weapon|`Right Shoulder`| Select the next weapon |
-|Show Menu|`Left Trigger` +<br>`Right Trigger` +<br>`Click Left Thumbstick`|**3 button combo**<br><br>This three button combo is required due to the Xbox One reserving the `Screen` and `Menu` buttons for browser-specific controls.<br><br>To enter the menu, hold down the left and right trigger buttons and click (press down) on the left thumbstick.|
+|Show Menu|`Left Trigger` +<br>`Right Trigger` +<br>`Click Left Thumbstick`|**3 button combo**<br><br>This three button combo is required due to the Xbox One reserving the `Screen` and `Menu` buttons for browser-specific controls.<br><br>To enter the menu, hold down the `left trigger` and `right trigger` buttons and `click` (press down) on the `left thumbstick`.|
 |Full screen Toggle|`View Button`<br>(Previously back button)|**Xbox One Only**<br><br>This button toggles between full screen and browser (containing the address bar, etc.) modes.|
 |Controls Menu|`Menu Button`<br>(Previously start button)|**Xbox One Only**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
 
