@@ -14,6 +14,13 @@ To play WebPrBoom, use one of the following URLs (GitHub is more reliable)
 or
 [https://raz0red.github.io/webprboom](https://raz0red.github.io/webprboom) 
 
+
+#### Gameplay Video
+
+<a href='http://www.youtube.com/watch?feature=player_embedded&v=FrfQZ2PJ33M' target='_blank'><img src='https://github.com/raz0red/webprboom/raw/master/webprboom.png' width='455' height='343' /></a>
+
+Click the image above to view the gameplay video.
+
 ## Features
 
 * Menu to select game to play
