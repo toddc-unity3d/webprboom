@@ -44,5 +44,5 @@ Equivalent controls for other controller types (PS4, Switch, etc.) should also b
 |Full screen Toggle|`View Button` (Previously back button)|**Xbox One Only**<br><br>This button toggles between full screen and browser (containing the address bar, etc.) modes.|
 |Controls Menu|`Menu Button` (Previously start button)|**Xbox One Only**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
 
-When presented with a Yes/No prompt, the `A button` corresponds to Yes and the `B button` to No.
+When presented with a Yes/No prompt, the `A button` corresponds to *Yes* and the `B button` to *No*.
 
