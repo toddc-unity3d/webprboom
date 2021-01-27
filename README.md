@@ -8,7 +8,7 @@ The original goal of WebPrBoom was to provide a version of PrBoom that is compat
 
 ## Play
 
-To play WebPrBoom, use one of the following URLs (GitHub is more reliable)
+To play WebPrBoom, visit one of the following URLs (GitHub is more reliable)
 
 [http://webprboom.com](http://webprboom.com) 
 or
@@ -56,3 +56,9 @@ When presented with a Yes/No prompt, the `A button` corresponds to *Yes* and the
 > **Note**
 > 
 > There appears to be a bug in the Xbox One Edge Browser that periodically prevents the `Screen` (full screen toggle) and `Menu` (controls menu) button presses from being processed. If this occurs, click the `Xbox button` which will cause the left side menu to appear. Next, click the `Xbox button` again to make the left menu disappear. At this point, the `Screen` and `Menu` buttons should work correctly.
+
+## Mouse Support (Pointer Lock)
+
+In addition to gamepad support, keyboard and mouse controls are also compatible with WebPrBoom.
+
+It is important to note that WebPrBoom supports **Pointer Lock** on compatible browsers. Pointer lock binds mouse input to the game window, preventing the game from losing mouse imput when the mouse travels outside the window. This functionality is critical when playinng a 3rd person shooter. To enable pointer lock, double click on the game window (you may have to repeat this a couple of times). Once the pointer is "locked", the pointer (arrow, etc.) will no longer be visible. To "unlock" from the window, press the escape key (you may have to repeat this a couple of times).
