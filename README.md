@@ -19,7 +19,7 @@ or
 
 [![WebPrBoom](https://github.com/raz0red/webprboom/raw/master/webprboom.png)](http://www.youtube.com/watch?feature=player_embedded&v=FrfQZ2PJ33M)
 
-Click the image above to view gameplay video.
+Click the image above to view gameplay of WebPrBoom running on the Xbox Series X web browser.
 
 ## Features
 
