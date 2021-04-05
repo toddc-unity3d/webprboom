@@ -44,8 +44,7 @@ emcc final.bc -o web/${game}/${game}.html  	\
      -s TOTAL_MEMORY=256MB     		\
      -s LEGACY_GL_EMULATION=1      	\
      -s EXIT_RUNTIME=1      \
-     --no-heap-copy -O3   \
-     -lidbfs.js
+     --no-heap-copy -O3
 
 cd ..
 
