@@ -915,11 +915,7 @@ void M_SaveDefaults (void)
 
     // Don't forget to sync to make sure you store it to IndexedDB
     EM_ASM(
-      FS.syncfs(function (err) {
-        if (err) {
-          console.error("Error during config save: " + err);
-        }
-      });
+      if (Module.prSyncFs) Module.prSyncFs();
     );  
   }
 
