@@ -49,7 +49,6 @@ Equivalent controls for other controller types (PS4, Switch, etc.) should also b
 |Next Weapon|`Right Shoulder`| Select the next weapon |
 |Show Menu|`Start`<br>+<br>`Select`| Displays the menu |
 |Show Menu (alternative)|`Left Trigger`<br>or<br>`Right Trigger`<br>+<br>`Click Left and Right Thumbsticks`|This button combo is required due to the Xbox One reserving the `Screen` and `Menu` buttons for browser-specific controls.<br><br>To enter the menu, hold down the `left trigger` or `right trigger` and `click` (press down) on the `left thumbstick` and `right thumbstick`.|
-
 |Controls Menu|`Menu Button`<br>(Previously start button)|**Xbox One Only**<br><br>Displays a menu that allows for choosing between "browsing" and "game" controls.|
 
 When presented with a Yes/No prompt, the `A button` corresponds to *Yes* and the `B button` to *No*.
