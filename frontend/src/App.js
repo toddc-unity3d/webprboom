@@ -101,15 +101,30 @@ export default class App extends Component {
             onExit: () => { reload(); },
             setWindowTitle: () => { return window.title; },
             locateFile: (path, prefix) => { return key + "/" + path; },
+            onRuntimeInitialized: () => { 
+                setTimeout(() => {
+                    const audioCtx = window.SDL.audioContext;
+                    const resumeFunc = () => {
+                        audioCtx.resume();
+                        if (audioCtx.state !== 'running') {
+                            audioCtx.resume();
+                        }
+                    }
+                    const docElement = document.documentElement;
+                    docElement.addEventListener("keydown", resumeFunc);
+                    docElement.addEventListener("click", resumeFunc);
+                    docElement.addEventListener("drop", resumeFunc);
+                    docElement.addEventListener("dragdrop", resumeFunc);
+                    docElement.addEventListener("touchstart", resumeFunc);
+                    canvas.style.display = 'block';
+                    this.setState({ mode: this.ModeEnum["loaded"] });
+                }, 10);
+            },      
             setStatus: (status) => {
                 let loading = status.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
                 if (loading) {
                     let progress = loading[2] / loading[4] * 100;
                     this.setState({ loadingPercent: progress });
-                    if (progress === 100) {
-                        canvas.style.display = 'block';
-                        this.setState({ mode: this.ModeEnum["loaded"] });
-                    }
                 }
             },
             preRun: [() => { Storage.mountAndPopulateFs(key); }]
