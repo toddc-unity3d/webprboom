@@ -4141,7 +4141,9 @@ boolean M_Responder (event_t* ev) {
 
     if (!menuactive && (
         (!usergame && ev->type == ev_joystick && ev->data1 && !waitForButtonRelease) ||
-        ((ev->data1 & 0x1c0 ) == 0x1c0))) {          
+        ((ev->data1 & 0xc0 ) && ((ev->data1 & 0xc00 ) == 0xc00)) || // R or L trigger + right and left analog buttons
+        ((ev->data1 & 0x300 ) == 0x300) // Start + Select
+      )) {          
       M_StartControlPanel();
       S_StartSound(NULL, sfx_swtchn);
       joywait = I_GetTime() + delay;
@@ -4149,7 +4151,7 @@ boolean M_Responder (event_t* ev) {
     }
 
     //if (joywait < I_GetTime()) {
-    if (!joywait) {
+    if (!joywait && menuactive) {
 
       if (ev->data3 == -1) {
         ch = key_menu_up;  // phares 3/7/98

@@ -83,7 +83,10 @@ void I_PollJoystick(void)
     (SDL_JoystickGetButton(joystick, 5)<<5) |
     (SDL_JoystickGetButton(joystick, 6)<<6) |
     (SDL_JoystickGetButton(joystick, 7)<<7) |
-    (SDL_JoystickGetButton(joystick, 10)<<8);
+    (SDL_JoystickGetButton(joystick, 8)<<8) |
+    (SDL_JoystickGetButton(joystick, 9)<<9) |
+    (SDL_JoystickGetButton(joystick, 10)<<10) |
+    (SDL_JoystickGetButton(joystick, 11)<<11);
 
   // for (int i = 0; i < 16; i++) {
   //   int val = SDL_JoystickGetButton(joystick, i);
