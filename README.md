@@ -14,12 +14,14 @@ The original goal of WebPrBoom was to provide a version of PrBoom that is compat
 * `freeglut3-dev`
 * `libsdl1.2-dev`
 * `libsdl-mixer1.2-dev`
+* `libsdl-net1.2-dev`
 
 ### Procedure
 
 Ensure you have activated Emscripten and a `EMSDK` variable that points to the root of the Emscripten installation. From the root of this repository, run:
 
 ```
+./configure
 make
 make install
 ```
@@ -31,7 +33,6 @@ To play WebPrBoom, visit one of the following URLs (GitHub is more reliable)
 [http://webprboom.com](http://webprboom.com) 
 or
 [https://raz0red.github.io/webprboom](https://raz0red.github.io/webprboom) 
-
 
 #### Gameplay Video (Xbox Series X Web Browser)
 
