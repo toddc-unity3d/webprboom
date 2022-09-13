@@ -10,8 +10,10 @@ The original goal of WebPrBoom was to provide a version of PrBoom that is compat
 
 ### Requirements
 
-* [Emscripten](https://emscripten.org/docs/getting_started/downloads.html).
-* freeglut3-dev
+* [Emscripten](https://emscripten.org/docs/getting_started/downloads.html)
+* `freeglut3-dev`
+* `libsdl1.2-dev`
+* `libsdl-mixer1.2-dev`
 
 ### Procedure
 
