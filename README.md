@@ -6,6 +6,22 @@ WebPrBoom is a fork of the excellent [WebDOOM](https://github.com/UstymUkhman/we
 
 The original goal of WebPrBoom was to provide a version of PrBoom that is compatible with the Xbox One (series X/S) browser. Currently, WebPrBoom works well for most devices (including Xbox One) that support WebAssembly and have a physical input mechanism (gamepad, mouse/keyboard, etc.).
 
+## Build
+
+### Requirements
+
+* [Emscripten](https://emscripten.org/docs/getting_started/downloads.html).
+* freeglut3-dev
+
+### Procedure
+
+Ensure you have activated Emscripten and a `EMSDK` variable that points to the root of the Emscripten installation. From the root of this repository, run:
+
+```
+make
+make install
+```
+
 ## Play
 
 To play WebPrBoom, visit one of the following URLs (GitHub is more reliable)

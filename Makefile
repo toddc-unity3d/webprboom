@@ -18,7 +18,6 @@
 # Top level automake Makefile.am for LxDoom
 #
 
-export GAME
 
 pkgdatadir = $(datadir)/prboom
 pkglibdir = $(libdir)/prboom
@@ -96,10 +95,10 @@ AUTOCONF = ${SHELL} /home/csmith/work/webDOOM/autotools/missing --run autoconf
 AUTOHEADER = ${SHELL} /home/csmith/work/webDOOM/autotools/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/csmith/work/webDOOM/autotools/missing --run automake-1.10
 AWK = mawk
-CC = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/emcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -I$(top_srcdir)/src -DGAME=\"$(GAME)\"
-CPP = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/emcc -E
+CFLAGS = -g -O2 -Wall -Wno-unused -Wno-switch -march=native -Wextra -Wno-missing-field-initializers -Winline -Wwrite-strings -Wundef -Wbad-function-cast -Wcast-align -Wcast-qual -Wdeclaration-after-statement -ffast-math -O2 -fomit-frame-pointer -I$(top_srcdir)/src
+CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
@@ -119,7 +118,7 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = -lSDL_mixer -lm 
+LIBS = -lpng -lSDL_mixer -lm 
 LN_S = ln -s
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/csmith/work/webDOOM/autotools/missing --run makeinfo
@@ -128,7 +127,7 @@ MIXER_CFLAGS =
 MIXER_LIBS = 
 MKDIR_P = /bin/mkdir -p
 NET_CFLAGS = 
-NET_LIBS =
+NET_LIBS = -lSDL_net
 OBJEXT = o
 PACKAGE = prboom
 PACKAGE_BUGREPORT = 
@@ -137,10 +136,10 @@ PACKAGE_STRING = prboom 2.5.0
 PACKAGE_TARNAME = prboom
 PACKAGE_VERSION = 2.5.0
 PATH_SEPARATOR = :
-RANLIB = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/emranlib
-SDL_CFLAGS =
-SDL_CONFIG = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/system/bin/sdl-config
-SDL_LIBS = 
+RANLIB = ranlib
+SDL_CFLAGS = -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
+SDL_CONFIG = /usr/bin/sdl-config
+SDL_LIBS = -L/usr/lib/i386-linux-gnu -lSDL
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
@@ -149,7 +148,7 @@ abs_builddir = /home/csmith/work/webDOOM
 abs_srcdir = /home/csmith/work/webDOOM
 abs_top_builddir = /home/csmith/work/webDOOM
 abs_top_srcdir = /home/csmith/work/webDOOM
-ac_ct_CC = /home/csmith/work/emsdk-1.38.48/emscripten/tag-1.38.15/emcc
+ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
 am__quote = 
@@ -233,7 +232,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	esac;
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
-	#$(SHELL) ./config.status --recheck
+	$(SHELL) ./config.status --recheck
 
 $(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(srcdir) && $(AUTOCONF)
